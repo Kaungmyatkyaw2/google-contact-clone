@@ -16,10 +16,9 @@ const ContactRow = ({data}) => {
   useEffect(() => {console.log(res)},[res])
 
   const handleDetail = (user) => {
-    console.log(user)
     if (localStorage.getItem("token") && auth) {
       localStorage.setItem('eachContact',JSON.stringify(user));
-      nav('/contacts/detail')
+      nav(`/contacts/detail/${user.id}`)
     }
   }
 
@@ -51,7 +50,9 @@ const ContactRow = ({data}) => {
               </div>
               <div className='lg:w-[20%] md:w-[10%] w-[30%]'>
                 <div className='hidden justify-end space-x-[20px] text-[20px] text-gray-600 cursor-pointer group-hover:flex'>
+                <div onClick={() => nav(`/contacts/edit/${i.id}`)}>
                 <MdOutlineModeEditOutline />
+                </div>
                 <div onClick={() => handleDetail(i)}>
                 <AiOutlineInfoCircle/>
                 </div>

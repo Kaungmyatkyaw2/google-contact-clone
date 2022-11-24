@@ -5,6 +5,7 @@ import Loader from './model/Loader'
 import Contacts from './pages/Contacts'
 import CreateContact from './pages/CreateContact'
 import Detail from './pages/Detail'
+import Edit from './pages/Edit'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import ShowContact from './pages/ShowContact'
@@ -26,7 +27,7 @@ const App = () => {
         }      
     }else{
       nav('/')
-      dispatch(logoutReducer())
+      // dispatch(logoutReducer())
     }
   },[isAuth])
 
@@ -43,7 +44,8 @@ const App = () => {
         <Route path='/contacts' element={<Contacts/>}>
           <Route index element={<ShowContact/>} /> 
           <Route path='create' element={<CreateContact/>} /> 
-          <Route path='detail' element={<Detail/>} /> 
+          <Route path='detail/:id' element={<Detail/>} /> 
+          <Route path='edit/:id' element={<Edit/>} /> 
         </Route>
       </Routes>
   )

@@ -3,11 +3,36 @@ import { AiOutlineStar } from 'react-icons/ai'
 import { BsArrowLeftShort, BsCalendarDate, BsCameraVideo, BsEnvelope, BsStar, BsTelephone, BsThreeDotsVertical } from 'react-icons/bs'
 import { MdOutlineLabel } from 'react-icons/md'
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useGetOneConactQuery } from '../store/service/Endpoints/AuthEndpoint'
+import Loader from '../model/Loader'
 
 const Detail = () => {
+
+    const {id} = useParams();
+    const getContact = useGetOneConactQuery(id)
+    const [contact,setContact] = useState({})
+
+        console.log(getContact)
+
+    useEffect(() => {
+        if (getContact.isSuccess) {
+         setContact(getContact.data.contact)
+        }
+    },[getContact])
+
+
+
   const show = useSelector(state => state.userAction.sidebar)
-  const contact = JSON.parse(localStorage.getItem("eachContact"))
+
+  if (getContact.isLoading) {
+    return (
+        <div  className={`duration-200 h-[90vh] overflow-hidden xl:fixed ${!show ? 'xl:ml-[20%] xl:w-[80%]' : 'w-[100%] ml-0'} w-full ml-0`}>
+            <Loader/>
+        </div>
+    )
+  }
 
 
   return (
@@ -74,8 +99,8 @@ const Detail = () => {
                 <div className='lg:w-[60%] sm:w-[85%] w-[95%] border rounded-[10px] px-[20px] py-[15px] space-y-[5px]'>
                     <h1 className='text-[17px] tracking-wide'>Contact details</h1>
                     <div className='space-y-[12px]'>
-                        <div className='flex items-center space-x-[15px]'><BsEnvelope className='text-gray-500 text-[18px]'/> <span className='text-primary font-robot text-[14px]'>{contact.email}</span></div>
-                        <div className='flex items-center space-x-[15px]'><BsTelephone className='text-gray-500 text-[18px]'/> <a href='' className='text-primary font-robot text-[14px]'>{contact.phone} <span className='text-[12px] pl-[5px] text-gray-400'>• Mobile</span></a></div>
+                        <div className='flex items-center space-x-[15px]'><BsEnvelope className='text-gray-500 text-[18px]'/> <a href={`mailto:${contact.email}`} target="_blank" className='text-primary font-robot text-[14px]'>{contact.email}</a></div>
+                        <div className='flex items-center space-x-[15px]'><BsTelephone className='text-gray-500 text-[18px]'/> <a href={`tel:${contact.phone}`} className='text-primary font-robot text-[14px]'>{contact.phone} <span className='text-[12px] pl-[5px] text-gray-400'>• Mobile</span></a></div>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
+import { Navigate, NavLink, useNavigate } from "react-router-dom"
 import logo from "../assets/images/logo.svg"
 import Input from '../model/Input'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {  useLoginMutation } from "../store/service/Endpoints/AuthEndpoint"
 import { loginReducer } from "../store/Slicer/auth/AuthSlicer"
 import Loader from "../model/Loader"
@@ -12,7 +12,7 @@ const Login = () => {
     const form = useRef()
     const [login,res] = useLoginMutation()
     const nav = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -26,7 +26,6 @@ const Login = () => {
         dispatch(loginReducer({token:res.data.token,user:res.data.auth}))
         nav("/contacts")
       }
-      console.log(res)
     },[res])
 
   
@@ -34,6 +33,8 @@ const Login = () => {
       return <Loader/>
     }
 
+
+  
 
   return (
     <div className='min-h-[100vh] toCenter'>

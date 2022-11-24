@@ -42,7 +42,7 @@ const ShowContact = () => {
             </div>     
       </div>
 
-      widgets<p className='text-[11px] font-robot font-bold text-gray-500 tracking-widest p-[10px]'>CONTACTS (19)</p>
+      <p className='text-[11px] font-robot font-bold text-gray-500 tracking-widest p-[10px]'>CONTACTS (19)</p>
 
         {
           data.isAuth && contact.isSuccess ? 

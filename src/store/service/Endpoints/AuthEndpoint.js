@@ -40,8 +40,21 @@ const endpoints = AuthApi.injectEndpoints({
                 method : "DELETE"
             }),
             invalidatesTags : ['update']
-        })
+        }),
+        getOneConact : builder.query({
+            query : (id) => `/contacts/${id}`,
+            providesTags : ['update']
+        }),
+        editContact : builder.mutation({
+            query : ({data,id}) => ({
+                url : `/contacts/${id}`,
+                method : "PATCH",
+                body : data
+            }),
+            invalidatesTags : ['update']
+
+        }) 
     })
 })
 
-export const {useLoginMutation,useAuthorizeQuery,useRegisterMutation,useGetContactQuery,useAddContactMutation,useDeleteContactMutation} = endpoints
+export const {useLoginMutation,useAuthorizeQuery,useRegisterMutation,useGetContactQuery,useAddContactMutation,useDeleteContactMutation,useGetOneConactQuery,useEditContactMutation} = endpoints
