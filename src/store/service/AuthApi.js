@@ -10,7 +10,7 @@ const AuthApi = createApi({
         {
             baseUrl : 'http://go.contact.mmeducare.com/api/v1',
             prepareHeaders : (header) => (
-                localStorage.getItem("token") ? header.set('authorization',`Bearer ${localStorage.getItem("token")}`) : header.delete("Authorization")
+                localStorage.getItem("token") ? header.set('authorization' , `Bearer ${localStorage.getItem("token")}`) : header.delete('authorization')
             )
         }
     ),

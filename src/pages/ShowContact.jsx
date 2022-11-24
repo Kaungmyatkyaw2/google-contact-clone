@@ -12,10 +12,9 @@ const ShowContact = () => {
   const navItems = [
     'Phone number','Job title & company'
   ]
-
+  
   const show = useSelector(state => state.userAction.sidebar)
   
-
   return (
     <div className={`duration-200 h-[100vh] overflow-scroll xl:fixed ${!show ? 'xl:ml-[20%] xl:w-[80%]' : 'w-[100%] ml-0'} w-full ml-0 px-[20px]`}>
 

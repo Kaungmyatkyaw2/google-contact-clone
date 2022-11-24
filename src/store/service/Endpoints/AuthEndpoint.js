@@ -18,8 +18,14 @@ const endpoints = AuthApi.injectEndpoints({
             }),
             invalidatesTags : ['update']
         }),
-        authorize : builder.query({
-            query : () =>  '/profile',
+        authorize : builder.mutation({
+            query : () =>  ({
+                url : '/profile',
+                method : "GET",
+                headers : {
+                    authorization : `Bearer ${localStorage.getItem("token")}`
+                }
+            }),
             providesTags : ['update']
         }),
         getContact : builder.query({
@@ -57,4 +63,4 @@ const endpoints = AuthApi.injectEndpoints({
     })
 })
 
-export const {useLoginMutation,useAuthorizeQuery,useRegisterMutation,useGetContactQuery,useAddContactMutation,useDeleteContactMutation,useGetOneConactQuery,useEditContactMutation} = endpoints
+export const {useLoginMutation,useAuthorizeMutation,useRegisterMutation,useGetContactQuery,useAddContactMutation,useDeleteContactMutation,useGetOneConactQuery,useEditContactMutation} = endpoints

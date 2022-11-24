@@ -7,6 +7,7 @@ import logo from "../assets/images/logo.svg"
 import { useRegisterMutation } from "../store/service/Endpoints/AuthEndpoint"
 import { useDispatch } from "react-redux"
 import { loginReducer } from "../store/Slicer/auth/AuthSlicer"
+import Loader from "../model/Loader"
 
 const Register = () => {
 
@@ -33,7 +34,9 @@ const Register = () => {
         console.log(res)
     },[res])
 
- 
+    if (res.isLoading) {
+        return <Loader/>
+    }
 
   return (
     

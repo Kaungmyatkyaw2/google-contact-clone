@@ -14,8 +14,6 @@ const Detail = () => {
     const getContact = useGetOneConactQuery(id)
     const [contact,setContact] = useState({})
 
-        console.log(getContact)
-
     useEffect(() => {
         if (getContact.isSuccess) {
          setContact(getContact.data.contact)

@@ -14,7 +14,6 @@ const Navbar = () => {
     const dispatch = useDispatch()
     const nav = useNavigate()
     const info = useSelector(state => state.authed)
-
  
     const handleSearch = (e) => {
         setSearch(e.target.value)

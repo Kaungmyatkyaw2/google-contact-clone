@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BsX } from 'react-icons/bs'
 import { CiCamera } from 'react-icons/ci'
 import { MdOutlineLabel } from 'react-icons/md'
@@ -17,7 +17,12 @@ const CreateContact = () => {
   const form = useRef()
   const nav = useNavigate()
   const [addContact,res] = useAddContactMutation()
- 
+
+  useEffect(() => {
+    if (res.isSuccess) {
+      nav("/contacts")
+    }
+  },[res])
 
   const handleSelectImage = (e) => {
     const file = imgSelector.current.files[0]

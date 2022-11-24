@@ -4,7 +4,7 @@ import { CiCamera } from 'react-icons/ci'
 import { MdOutlineLabel } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { useAddContactMutation, useEditContactMutation, useGetOneConactQuery } from '../store/service/Endpoints/AuthEndpoint'
+import { useEditContactMutation, useGetOneConactQuery } from '../store/service/Endpoints/AuthEndpoint'
 import Lottie from 'lottie-react'
 import load from '../assets/animation/btn-loader.json'
 import EditForm from '../components/edit/EditForm'
@@ -18,13 +18,20 @@ const Edit = () => {
   const [data,setData] = useState({});
   const {id} = useParams()
   const getContact = useGetOneConactQuery(id)
+  const nav = useNavigate()
 
 
   useEffect(() => {
     if (getContact.isSuccess) {
         setData(getContact.data.contact)
     }
-  },[getContact])
+  },[getContact]);
+
+  useEffect(() => {
+    if (res.isSuccess) {
+      nav('/contacts')
+    }
+  },[res])
 
 
   const handleSave = () => { 
