@@ -8,33 +8,21 @@ import { useAddContactMutation, useEditContactMutation, useGetOneConactQuery } f
 import Lottie from 'lottie-react'
 import load from '../assets/animation/btn-loader.json'
 import EditForm from '../components/edit/EditForm'
+import Loader from '../model/Loader'
 
 const Edit = () => {
 
   const show = useSelector(state => state.userAction.sidebar)
   const form = useRef()
-  const imgSelector = useRef()
-  const [img,setImg] = useState()
-  const nav = useNavigate()
   const [edit,res] = useEditContactMutation()
   const [data,setData] = useState({});
   const {id} = useParams()
   const getContact = useGetOneConactQuery(id)
 
-  const handleSelectImage = (e) => {
-    const file = imgSelector.current.files[0]
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = (event) => {
-        setImg(event.target.result)
-    }
-  }
-
 
   useEffect(() => {
     if (getContact.isSuccess) {
         setData(getContact.data.contact)
-        setImg(getContact.data.contact.contactPhoto)
     }
   },[getContact])
 
@@ -47,10 +35,16 @@ const Edit = () => {
         'phone' : form.current[3].value,
     }})
   }
+
+  if (getContact.isLoading) {
+    return <div className={`duration-200 h-[90vh] overflow-scroll xl:fixed ${!show ? 'xl:ml-[20%] xl:w-[80%]' : 'w-[100%] ml-0'} w-full ml-0 px-[20px] overflow-scroll`}>
+        <Loader/>
+     </div>
+  }
     
 
   return (
-    <div  className={`duration-200 h-[90vh] overflow-scroll xl:fixed ${!show ? 'xl:ml-[20%] xl:w-[80%]' : 'w-[100%] ml-0'} w-full ml-0 px-[20px] overflow-scroll`}>
+    <div className={`duration-200 h-[90vh] overflow-scroll xl:fixed ${!show ? 'xl:ml-[20%] xl:w-[80%]' : 'w-[100%] ml-0'} w-full ml-0 px-[20px] overflow-scroll`}>
 
             <div className='w-full flex lg:flex-row flex-col py-[30px] lg:border-b lg:sticky top-0 left-0 bg-white z-[999] lg:space-y-0 space-y-[20px]'>
 
@@ -68,9 +62,9 @@ const Edit = () => {
                 </div>
 
                 <div className='lg:w-fit w-full flex lg:justify-start justify-center space-x-[35px]'>
-                    <input type="file" className='hidden' ref={imgSelector} onChange={handleSelectImage} />
-                    <div className='w-[150px] h-[150px] relative' onClick={() => imgSelector.current.click()}>
-                        <img className='rounded-full w-full h-full object-cover origin-top' src={img} alt="" />
+                    <input type="file" className='hidden'/>
+                    <div className='w-[150px] h-[150px] relative'>
+                        <img className='rounded-full w-full h-full object-cover origin-top' src={getContact.data.contact.contactPhoto} alt="" />
                         <div className="w-[50px] h-[50px] bg-gray-800 bg-opacity-[0.5] rounded-full toCenter layOutCenter">
                                 <CiCamera className="text-[30px] text-white rounded-full"/>
                         </div>

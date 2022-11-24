@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { BsX } from 'react-icons/bs'
 import { CiCamera } from 'react-icons/ci'
 import { MdOutlineLabel } from 'react-icons/md'
@@ -55,8 +55,9 @@ const CreateContact = () => {
                       </NavLink>
                       <span className='lg:hidden'>Create Contact</span>
                     </div>
-                    <button className='btn-primary !px-[25px] lg:hidden' onClick={handleSave}>
-                      Save
+                     <button className={`btn-primary lg:hidden flex justify-center items-center ${res.isLoading && '!bg-[#DFEDFE] px-[25px] !text-black !py-0'}`} onClick={handleSave}>
+                      <span>{res.isLoading ? 'Saving' : "Save"}</span>
+                      <Lottie animationData={load} autoPlay={true} loop={true} className={`w-[40px] ${!res.isLoading && 'hidden'}`} />
                     </button>
                 </div>
 

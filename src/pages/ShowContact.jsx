@@ -39,7 +39,7 @@ const ShowContact = () => {
 
           <div className='lg:w-[20%] md:w-[10%] w-[30%]'>
                <h1><BsThreeDotsVertical className='text-[20px] ml-auto'/></h1>
-            </div>     
+          </div>     
       </div>
 
       <p className='text-[11px] font-robot font-bold text-gray-500 tracking-widest p-[10px]'>CONTACTS (19)</p>

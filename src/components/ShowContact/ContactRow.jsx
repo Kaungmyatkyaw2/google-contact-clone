@@ -3,7 +3,8 @@ import {MdOutlineModeEditOutline} from 'react-icons/md'
 import {useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDeleteContactMutation } from '../../store/service/Endpoints/AuthEndpoint'
-import { useEffect } from 'react'
+import Lottie from 'lottie-react'
+import load from '../../assets/animation/btn-loader.json'
 
 
 const ContactRow = ({data}) => {
@@ -13,11 +14,8 @@ const ContactRow = ({data}) => {
   const [drop,res] = useDeleteContactMutation()
 
 
-  useEffect(() => {console.log(res)},[res])
-
   const handleDetail = (user) => {
     if (localStorage.getItem("token") && auth) {
-      localStorage.setItem('eachContact',JSON.stringify(user));
       nav(`/contacts/detail/${user.id}`)
     }
   }
@@ -49,7 +47,7 @@ const ContactRow = ({data}) => {
                 <h1>{i.job}</h1>
               </div>
               <div className='lg:w-[20%] md:w-[10%] w-[30%]'>
-                <div className='hidden justify-end space-x-[20px] text-[20px] text-gray-600 cursor-pointer group-hover:flex'>
+                <div className={`hidden justify-end space-x-[20px] text-[20px] text-gray-600 cursor-pointer ${res.isLoading ? 'group-hover:!hidden' : 'group-hover:flex'}`}>
                 <div onClick={() => nav(`/contacts/edit/${i.id}`)}>
                 <MdOutlineModeEditOutline />
                 </div>
@@ -60,6 +58,9 @@ const ContactRow = ({data}) => {
                   <AiOutlineDelete/>
                 </div>
                 </div>
+                {
+                  res.isLoading && <Lottie animationData={load} autoPlay={true} loop={true} className={`w-[40px] ${!res.isLoading && 'hidden'}`} />
+                }
               </div>
   
             </div>
