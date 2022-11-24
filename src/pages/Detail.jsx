@@ -4,10 +4,11 @@ import { BsArrowLeftShort, BsCalendarDate, BsCameraVideo, BsEnvelope, BsStar, Bs
 import { MdOutlineLabel } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { HiOutlineCake } from 'react-icons/hi2'
 
 const Detail = () => {
   const show = useSelector(state => state.userAction.sidebar)
+  const contact = JSON.parse(localStorage.getItem("eachContact"))
+
 
   return (
             <div  className={`duration-200 h-[90vh] overflow-hidden xl:fixed ${!show ? 'xl:ml-[20%] xl:w-[80%]' : 'w-[100%] ml-0'} w-full ml-0`}>
@@ -28,9 +29,14 @@ const Detail = () => {
                 </div>
 
                 <div className='w-full flex lg:flex-row flex-col items-center lg:space-x-[40px] lg:pl-[80px]'>
-                    <img src="https://reqres.in/img/faces/11-image.jpg" className='lg:w-[160px] sm:w-[30%] w-[50%] rounded-full'/>
+                    {
+                        contact?.contactPhoto === 'http://go.contact.mmeducare.com/storage' ?
+                        <div className='lg:w-[160px] lg:h-[160px] sm:w-[30%] w-[50%] rounded-full toCenter text-[40px] font-bold bg-gray-500 text-white'>{contact.fullName[0]}</div>
+                        :
+                         <img src={contact.contactPhoto} className='w-[160px] h-[160px] object-cover rounded-full'/>
+                    }
                     <div className=' lg:w-auto w-full'>
-                        <h1 className='text-center text-[30px] font-robot font-light'>Dee Dee</h1>
+                        <h1 className='text-center text-[30px] font-robot font-light'>{contact.fullName}</h1>
                        <div className='flex w-full'>
                         <div className='shadow h-[35px] w-[35px] rounded-full toCenter border'>
                                 <MdOutlineLabel className='text-[20px] text-primary'/>
@@ -68,9 +74,8 @@ const Detail = () => {
                 <div className='lg:w-[60%] sm:w-[85%] w-[95%] border rounded-[10px] px-[20px] py-[15px] space-y-[5px]'>
                     <h1 className='text-[17px] tracking-wide'>Contact details</h1>
                     <div className='space-y-[12px]'>
-                        <div className='flex items-center space-x-[15px]'><BsEnvelope className='text-gray-500 text-[18px]'/> <span className='text-primary font-robot text-[14px]'>Add email</span></div>
-                        <div className='flex items-center space-x-[15px]'><BsTelephone className='text-gray-500 text-[18px]'/> <span className='text-primary font-robot text-[14px]'>09 212 9343488 <span className='text-[12px] pl-[5px] text-gray-400'>• Mobile</span></span></div>
-                        <div className='flex items-center space-x-[15px]'><HiOutlineCake className='text-gray-500 text-[18px]'/> <span className='text-primary font-robot text-[14px]'>Add birthday</span></div>
+                        <div className='flex items-center space-x-[15px]'><BsEnvelope className='text-gray-500 text-[18px]'/> <span className='text-primary font-robot text-[14px]'>{contact.email}</span></div>
+                        <div className='flex items-center space-x-[15px]'><BsTelephone className='text-gray-500 text-[18px]'/> <a href='' className='text-primary font-robot text-[14px]'>{contact.phone} <span className='text-[12px] pl-[5px] text-gray-400'>• Mobile</span></a></div>
                     </div>
                 </div>
             </div>

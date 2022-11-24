@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import {BsThreeDotsVertical} from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import ContactRow from '../components/ShowContact/ContactRow'
@@ -8,8 +7,7 @@ import { useGetContactQuery } from '../store/service/Endpoints/AuthEndpoint'
 const ShowContact = () => {
 
   const data = useSelector(state => state.authed)
-  const contact = useGetContactQuery()
-
+  const contact = useGetContactQuery();
 
   const navItems = [
     'Phone number','Job title & company'
@@ -44,11 +42,11 @@ const ShowContact = () => {
             </div>     
       </div>
 
-      <p className='text-[11px] font-robot font-bold text-gray-500 tracking-widest p-[10px]'>CONTACTS (19)</p>
+      widgets<p className='text-[11px] font-robot font-bold text-gray-500 tracking-widest p-[10px]'>CONTACTS (19)</p>
 
         {
           data.isAuth && contact.isSuccess ? 
-          <ContactRow data={contact.data.contacts.data} />
+          <ContactRow data={contact.currentData.data} />
           :
           <Loader/>
         }

@@ -1,8 +1,28 @@
-import { AiOutlineStar } from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlineInfoCircle } from 'react-icons/ai'
 import {MdOutlineModeEditOutline} from 'react-icons/md'
-import {BsThreeDotsVertical} from 'react-icons/bs'
+import {useNavigate} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useDeleteContactMutation } from '../../store/service/Endpoints/AuthEndpoint'
+import { useEffect } from 'react'
+
 
 const ContactRow = ({data}) => {
+
+  const nav = useNavigate()
+  const auth = useSelector(state => state.authed.isAuth)
+  const [drop,res] = useDeleteContactMutation()
+
+
+  useEffect(() => {console.log(res)},[res])
+
+  const handleDetail = (user) => {
+    console.log(user)
+    if (localStorage.getItem("token") && auth) {
+      localStorage.setItem('eachContact',JSON.stringify(user));
+      nav('/contacts/detail')
+    }
+  }
+
   return (
     
         data?.map((i,index) => (
@@ -13,7 +33,7 @@ const ContactRow = ({data}) => {
                       <input  id="default-checkbox" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500" />
                   </div>
                   {
-                    i.contactPhoto !== null ?
+                    i.contactPhoto !== 'http://go.contact.mmeducare.com/storage' ?
                     <img className='w-[36px] h-[36px] block group-hover:hidden rounded-full object-cover' src={i.contactPhoto} alt="" />
                     :
                     <div className={`w-[36px] h-[36px] bg-[#808080] rounded-full flex group-hover:hidden toCenter`}>{i.firstName[0]}</div>
@@ -32,8 +52,12 @@ const ContactRow = ({data}) => {
               <div className='lg:w-[20%] md:w-[10%] w-[30%]'>
                 <div className='hidden justify-end space-x-[20px] text-[20px] text-gray-600 cursor-pointer group-hover:flex'>
                 <MdOutlineModeEditOutline />
-                <AiOutlineStar/>
-                <BsThreeDotsVertical/>
+                <div onClick={() => handleDetail(i)}>
+                <AiOutlineInfoCircle/>
+                </div>
+                <div onClick={() => drop(i.id)}>
+                  <AiOutlineDelete/>
+                </div>
                 </div>
               </div>
   

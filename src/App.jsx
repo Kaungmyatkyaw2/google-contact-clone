@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {Route,Routes,useNavigate} from 'react-router-dom'
 import Loader from './model/Loader'
@@ -9,21 +9,24 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import ShowContact from './pages/ShowContact'
 import { useAuthorizeQuery } from './store/service/Endpoints/AuthEndpoint'
-import { loginReducer } from './store/Slicer/auth/AuthSlicer'
+import { loginReducer, logoutReducer } from './store/Slicer/auth/AuthSlicer'
 
 const App = () => {
 
   const nav = useNavigate()
   const isAuth = useAuthorizeQuery();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
-    if (localStorage.getItem("token") && isAuth.isSuccess) {
-      nav('/contacts')
-      dispatch(loginReducer({token:localStorage.getItem("token"),user:isAuth.data.profile[0]}))
+    if (localStorage.getItem("token") && !isAuth.isError) {
+        if (isAuth.isSuccess) {
+          nav('/contacts')
+          dispatch(loginReducer({token:localStorage.getItem("token"),user:isAuth.data.profile[0]}))
+        }      
     }else{
       nav('/')
+      dispatch(logoutReducer())
     }
   },[isAuth])
 

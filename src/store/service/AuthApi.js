@@ -5,6 +5,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 const AuthApi = createApi({
     reducerPath : "Api",
+    tagTypes:["update"],
     baseQuery:fetchBaseQuery(
         {
             baseUrl : 'http://go.contact.mmeducare.com/api/v1',

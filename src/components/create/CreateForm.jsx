@@ -15,27 +15,13 @@ const CreateForm = () => {
                     type : 'text'
                 },
                 {
-                    name : 'seondName',
+                    name : 'secondName',
                     placeholder : "Surname",
                     type : 'text'
                 }
             ]
         },
-        {
-            icon : <BsBuilding/>,
-            input : [
-                {
-                    name : 'job',
-                    placeholder : 'Job title',
-                    type:'text'
-                },
-                {
-                    name : 'company',
-                    placeholder : 'Company',
-                    type:'text'
-                }
-            ]
-        },
+
         {
             icon : <HiOutlineEnvelope/>,
             input : [
@@ -56,16 +42,7 @@ const CreateForm = () => {
                 }
             ]
         },
-        {
-            icon : <MdOutlineCake/>,
-            input : [
-                {
-                    name : 'birth',
-                    placeholder:'Birthday',
-                    type : 'text'
-                }
-            ]
-        },
+      
       ]
 
   return (

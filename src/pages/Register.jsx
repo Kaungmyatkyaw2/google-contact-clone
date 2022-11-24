@@ -30,6 +30,7 @@ const Register = () => {
             dispatch(loginReducer({token:res.data.token,user:res.data.auth}))
             nav("/contacts")
         }
+        console.log(res)
     },[res])
 
  

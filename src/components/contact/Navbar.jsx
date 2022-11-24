@@ -14,6 +14,7 @@ const Navbar = () => {
     const dispatch = useDispatch()
     const nav = useNavigate()
     const info = useSelector(state => state.authed)
+
  
     const handleSearch = (e) => {
         setSearch(e.target.value)
@@ -49,7 +50,7 @@ const Navbar = () => {
                   <TbGridDots className='sm:block hidden'/>
                   <div onClick={handleLogOut} className='w-[32px] h-[32px] overflow-hidden rounded-full hover:ring-4 hover:ring-gray-200 focus:ring-4 focus:ring-gray-300 ring-opacity-[0.6] cursor-pointer'>
                     {
-                      info?.user?.userPhoto === null ? <div className='w-full h-full bg-green-700 text-white font-bold toCenter'>{info?.user?.name[0]}</div> :
+                      info?.user?.userPhoto === null || 'http://go.contact.mmeducare.com/storage' ? <div className='w-full h-full bg-green-700 text-white font-bold toCenter'>{info?.user?.name[0]}</div> :
                       <img className='w-full h-full object-cover ' src="https://img.freepik.com/premium-photo/image-young-asian-man-posing-background_296537-7145.jpg?size=626&ext=jpg&ga=GA1.2.1174692878.1668495893&semt=sph" alt="" />
                     }
                   </div>

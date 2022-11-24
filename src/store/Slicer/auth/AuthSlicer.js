@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isAuth : false,
     user : null,
-    token : null
+    token : null,
+    eachContact : null
 }
 
 const AuthSlicer = createSlice({
@@ -22,9 +23,12 @@ const AuthSlicer = createSlice({
             state.isAuth = false
             state.user = null
             state.token = null
+        },
+        addEachUser : (state,action) => {
+            state.eachContact = action.payload
         }
     }
 })
 
-export const {loginReducer,logoutReducer} =  AuthSlicer.actions
+export const {loginReducer,logoutReducer,addEachUser} =  AuthSlicer.actions
 export default AuthSlicer.reducer
