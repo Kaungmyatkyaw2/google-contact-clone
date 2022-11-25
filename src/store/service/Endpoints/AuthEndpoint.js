@@ -59,8 +59,11 @@ const endpoints = AuthApi.injectEndpoints({
             }),
             invalidatesTags : ['update']
 
-        }) 
+        }) ,
+        searchContact : builder.query({
+            query : (name) => `/contacts?search=${name}`
+        })
     })
 })
 
-export const {useLoginMutation,useAuthorizeMutation,useRegisterMutation,useGetContactQuery,useAddContactMutation,useDeleteContactMutation,useGetOneConactQuery,useEditContactMutation} = endpoints
+export const {useLoginMutation,useAuthorizeMutation,useRegisterMutation,useGetContactQuery,useAddContactMutation,useDeleteContactMutation,useGetOneConactQuery,useEditContactMutation,useLazySearchContactQuery} = endpoints

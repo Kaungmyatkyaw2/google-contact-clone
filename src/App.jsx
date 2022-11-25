@@ -9,7 +9,7 @@ import Edit from './pages/Edit'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import ShowContact from './pages/ShowContact'
-import { useAuthorizeMutation, useGetContactQuery } from './store/service/Endpoints/AuthEndpoint'
+import { useAuthorizeMutation } from './store/service/Endpoints/AuthEndpoint'
 import { loginReducer, logoutReducer } from './store/Slicer/auth/AuthSlicer'
 
 const App = () => {
@@ -26,7 +26,6 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem("token") && !isAuth.isError) {
         if (isAuth.isSuccess) {
-          console.log(isAuth.data.profile[0])
           dispatch(loginReducer({token:localStorage.getItem("token"),user:isAuth.data.profile[0]}))
           nav('/contacts')
         }      

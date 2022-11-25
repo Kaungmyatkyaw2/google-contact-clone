@@ -28,12 +28,10 @@ const Login = () => {
       }
     },[res])
 
-  
+
     if (res.isLoading) {
       return <Loader/>
     }
-
-
   
 
   return (

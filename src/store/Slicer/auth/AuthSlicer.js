@@ -5,6 +5,7 @@ const initialState = {
     isAuth : false,
     user : null,
     token : null,
+    search : ''
 }
 
 const AuthSlicer = createSlice({
@@ -23,8 +24,11 @@ const AuthSlicer = createSlice({
             state.user = null
             state.token = null
         },
+        putSearch : (state,action) => {
+            state.search = action.payload
+        }
     }
 })
 
-export const {loginReducer,logoutReducer} =  AuthSlicer.actions
+export const {loginReducer,logoutReducer,putSearch} =  AuthSlicer.actions
 export default AuthSlicer.reducer

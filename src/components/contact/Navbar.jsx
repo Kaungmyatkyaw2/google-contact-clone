@@ -3,20 +3,18 @@ import {VscMenu} from 'react-icons/vsc'
 import {TbGridDots} from 'react-icons/tb'
 import {AiOutlineQuestionCircle, AiOutlineSearch, AiOutlineSetting} from 'react-icons/ai'
 import {BsX} from 'react-icons/bs'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggle } from '../../store/Slicer/useraction/UserActionSlicer'
-import { logoutReducer } from '../../store/Slicer/auth/AuthSlicer'
+import { logoutReducer, putSearch } from '../../store/Slicer/auth/AuthSlicer'
 
 
 const Navbar = () => {
-    const [search,setSearch] = useState('')
     const dispatch = useDispatch()
     const nav = useNavigate()
-    const info = useSelector(state => state.authed)
+    const info = useSelector(state => state.authed);
  
-    const handleSearch = (e) => {
-        setSearch(e.target.value)
+    const handleSubmit = (e) => {
+        dispatch(putSearch(e.target.value));
     }
 
     const handleLogOut = () => {
@@ -37,8 +35,8 @@ const Navbar = () => {
         <div className='w-[80%] flex items-center justify-between pl-[25px] sm:space-x-0 space-x-[20px]'>
             <div className='sm:bg-[#F1F3F4] w-[65%] @:hover:bg-red-500 flex items-center sm:justify-start justify-end pl-[20px] rounded-[10px] relative'>
                 <AiOutlineSearch className='sm:text-[25px] text-[22px] text-gray-500'/>
-                <input value={search} type="text" className='py-[12px] px-[20px] w-full bg-transparent outline-none placeholder:text-[17px] sm:block hidden' placeholder='Search' onChange={handleSearch} />
-                <BsX className={`text-gray-500 text-end text-[35px] mr-[20px] cursor-pointer absolute top-[50%] translate-y-[-50%] right-0 ${search.length !== 0 ? 'block' : 'hidden'}`}/>
+                <input type="text" className='py-[12px] px-[20px] w-full bg-transparent outline-none placeholder:text-[17px] sm:block hidden' placeholder='Search' onChange={handleSubmit} />
+                <BsX className={`text-gray-500 text-end text-[35px] mr-[20px] cursor-pointer absolute top-[50%] translate-y-[-50%] right-0`}/>
             </div>
             <div className='flex sm:space-x-[60px] items-center pr-[20px] text-gray-600'>
                 <div className='flex items-center text-[19px] space-x-[25px]'>

@@ -1,13 +1,40 @@
+import { useEffect, useState } from 'react'
 import {BsThreeDotsVertical} from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import ContactRow from '../components/ShowContact/ContactRow'
 import Loader from '../model/Loader'
-import { useGetContactQuery } from '../store/service/Endpoints/AuthEndpoint'
+import { useGetContactQuery, useLazySearchContactQuery } from '../store/service/Endpoints/AuthEndpoint'
 
 const ShowContact = () => {
 
   const data = useSelector(state => state.authed)
-  const contact = useGetContactQuery();
+  const getContact = useGetContactQuery();
+  const [contact,setContact] = useState();
+  const [trig,res,last] = useLazySearchContactQuery()
+  const search = useSelector(state => state.authed.search)
+
+  useEffect(() => {
+    if (!search.length == 0) {
+      trig(search)
+    }else{
+      if (getContact.isSuccess) {
+      setContact(getContact?.currentData.data)
+      }
+    }
+  },[search])
+
+  useEffect(() => {
+    if (res.isSuccess && !search.length == 0) {
+      setContact(res?.data?.data)
+    }
+  },[res])
+
+
+  useEffect(() => {
+    if (getContact.isSuccess) {
+      setContact(getContact?.currentData.data)
+    }
+  },[getContact])
 
   const navItems = [
     'Phone number','Job title & company'
@@ -16,7 +43,7 @@ const ShowContact = () => {
   const show = useSelector(state => state.userAction.sidebar)
   
   return (
-    <div className={`duration-200 h-[100vh] overflow-scroll xl:fixed ${!show ? 'xl:ml-[20%] xl:w-[80%]' : 'w-[100%] ml-0'} w-full ml-0 px-[20px]`}>
+    <div className={`duration-200 overflow-auto xl:fixed ${!show ? 'xl:ml-[20%] xl:w-[80%]' : 'w-[100%] ml-0'} w-full ml-0 px-[20px]`}>
 
       <div className='row-container'>
 
@@ -44,10 +71,10 @@ const ShowContact = () => {
       <p className='text-[11px] font-robot font-bold text-gray-500 tracking-widest p-[10px]'>CONTACTS (19)</p>
 
         {
-          data.isAuth && contact.isSuccess ? 
-          <ContactRow data={contact.currentData.data} />
-          :
+          (!data.isAuth && !getContact.isSuccess) || res.status === 'pending' ?
           <Loader/>
+            :
+          <ContactRow data={contact} />
         }
 
     </div>
