@@ -9,9 +9,9 @@ const AuthApi = createApi({
     baseQuery:fetchBaseQuery(
         {
             baseUrl : 'http://go.contact.mmeducare.com/api/v1',
-            prepareHeaders : (header) => (
+            prepareHeaders : (header) => {
                 localStorage.getItem("token") ? header.set('authorization' , `Bearer ${localStorage.getItem("token")}`) : header.delete('authorization')
-            )
+                }
         }
     ),
     endpoints : (builder) => ({})

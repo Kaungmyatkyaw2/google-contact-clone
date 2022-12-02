@@ -10,12 +10,12 @@ const ShowContact = () => {
   const data = useSelector(state => state.authed)
   const getContact = useGetContactQuery();
   const [contact,setContact] = useState();
-  const [trig,res,last] = useLazySearchContactQuery()
+  const [searchApi,searchResult,last] = useLazySearchContactQuery()
   const search = useSelector(state => state.authed.search)
 
   useEffect(() => {
     if (!search.length == 0) {
-      trig(search)
+      searchApi(search)
     }else{
       if (getContact.isSuccess) {
       setContact(getContact?.currentData.data)
@@ -24,11 +24,10 @@ const ShowContact = () => {
   },[search])
 
   useEffect(() => {
-    if (res.isSuccess && !search.length == 0) {
-      setContact(res?.data?.data)
+    if (searchResult.isSuccess && !search.length == 0) {
+      setContact(searchResult?.data?.data)
     }
-  },[res])
-
+  },[searchResult])
 
   useEffect(() => {
     if (getContact.isSuccess) {
@@ -71,10 +70,10 @@ const ShowContact = () => {
       <p className='text-[11px] font-robot font-bold text-gray-500 tracking-widest p-[10px]'>CONTACTS (19)</p>
 
         {
-          (!data.isAuth && !getContact.isSuccess) || res.status === 'pending' ?
+          getContact.isLoading || searchResult.status === 'pending' ?
           <Loader/>
             :
-          <ContactRow data={contact} />
+          contact?.length !== 0 ? <ContactRow data={contact} /> : <h1>No Contact</h1>
         }
 
     </div>
